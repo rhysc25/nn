@@ -4,11 +4,12 @@
 #include <iostream>
 
 class matrix {
-    public:
+    private:
         std::vector<float>& v;
         int rows;
         int columns;
 
+    public:
         matrix(std::vector<float>& vi, int ri, int ci);
         
         void list_contents();
