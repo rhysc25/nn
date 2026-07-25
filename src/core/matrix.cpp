@@ -23,6 +23,10 @@ float matrix::get_element(int r, int c) {
     return v[r * columns + c];
 }
 
+void matrix::set_element(int r, int c, float val) {
+    v[r * columns + c] = val;
+}
+
 void multiply(matrix& a, matrix& b) {
     a.list_contents();
     b.list_contents();
@@ -31,6 +35,7 @@ void multiply(matrix& a, matrix& b) {
 int main() {
     matrix m1(v1, 2, 3);
     matrix m2(v2, 3, 2);
+    m2.set_element(1, 1, 3.4f);
     multiply(m1, m2);
     return 0;
 }

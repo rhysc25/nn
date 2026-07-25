@@ -14,6 +14,7 @@ class matrix {
         
         void list_contents();
         float get_element(int r, int c);
+        void set_element(int r, int c, float val);
 };
 
 void multiply(matrix& a, matrix& b);
