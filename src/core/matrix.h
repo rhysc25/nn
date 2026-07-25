@@ -12,5 +12,7 @@ class matrix {
     public:
         matrix(std::vector<float>& vi, int ri, int ci);
         
-        void list_contents();
+        void list_contents() const;
 };
+
+void multiply(const matrix& a, const matrix& b);
