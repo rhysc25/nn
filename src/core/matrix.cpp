@@ -9,24 +9,28 @@ matrix::matrix(std::vector<float>& vi, int ri, int ci)
 {}
 
 // Print out all the values in the matrix
-void matrix::list_contents() const {
+void matrix::list_contents() {
     std::cout << "Printing matrix: \n";
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < columns; j++) {
-            std::cout << v[i * columns + j] << " ";
+            std::cout << get_element(i, j) << " ";
         }
         std::cout << "\n";
     }
 }
 
-void multiply(const matrix& a, const matrix& b) {
+float matrix::get_element(int r, int c) {
+    return v[r * columns + c];
+}
+
+void multiply(matrix& a, matrix& b) {
     a.list_contents();
     b.list_contents();
 }
 
 int main() {
-    const matrix m1(v1, 2, 3);
-    const matrix m2(v2, 3, 2);
+    matrix m1(v1, 2, 3);
+    matrix m2(v2, 3, 2);
     multiply(m1, m2);
     return 0;
 }
