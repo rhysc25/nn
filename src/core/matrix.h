@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <iostream>
 
 class MatrixView {
     private:
@@ -11,6 +12,7 @@ class MatrixView {
     public:
         MatrixView(float* d, size_t r, size_t c, size_t s);
         float& operator()(size_t r, size_t c);
+        void list_contents();
 };
 
 class MatrixOwner {
@@ -21,4 +23,5 @@ class MatrixOwner {
     public:
         MatrixOwner(size_t r, size_t c);
         MatrixView view();
+        void fill(std::vector<float> vin);
 };
