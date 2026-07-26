@@ -12,6 +12,12 @@ class MatrixView {
     public:
         MatrixView(float* d, size_t r, size_t c, size_t s);
         float& operator()(size_t r, size_t c);
+        size_t get_columns();
+        void set_columns(size_t c);
+        size_t get_rows();
+        void set_rows(size_t r);
+        size_t get_stride();
+        void set_stride(size_t s);
         void list_contents();
 };
 
