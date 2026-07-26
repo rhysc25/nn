@@ -1,25 +1,24 @@
 #pragma once
 
 #include <vector>
-#include <iostream>
 
-class matrix {
+class MatrixView {
     private:
-        std::vector<float>& v;
-        int rows;
-        int columns;
+        float* data; // Pointer to data vector
+        size_t rows, cols;
+        size_t stride; // distance between rows
 
     public:
-        matrix(std::vector<float>& vi, int ri, int ci);
-        
-        void list_contents();
-
-        float get_element(int r, int c);
-        void set_element(int r, int c, float val);
-        int get_columns();
-        void set_columns(int c);
-        int get_rows();
-        void set_rows(int r);
+        MatrixView(float* d, size_t r, size_t c, size_t s);
+        float& operator()(size_t r, size_t c);
 };
 
-void multiply(matrix& a, matrix& b);
+class MatrixOwner {
+    private:
+        std::vector<float> v;
+        size_t rows, cols;
+
+    public:
+        MatrixOwner(size_t r, size_t c);
+        MatrixView view();
+};
