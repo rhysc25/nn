@@ -59,6 +59,19 @@ void multiply(MatrixView& a, MatrixView& b, MatrixView& out) {
     out.list_contents();
 }
 
+void add(MatrixView& a, MatrixView& b, MatrixView& out) {
+    a.list_contents();
+    b.list_contents();
+
+    for (int i = 0; i < out.get_rows(); i++) {
+        for (int j = 0; j < out.get_columns(); j++) {
+            out(i, j) = a(i, j) + b(i, j);
+        }
+    }
+
+    out.list_contents();
+}
+
 int main() {
     // Set up test
     MatrixOwner A(2,3);
@@ -70,8 +83,14 @@ int main() {
     MatrixOwner C(2,2);
     C.fill(std::vector<float> {0.0f, 0.0f, 0.0f, 0.0f});
     MatrixView CView = C.view();
+    MatrixOwner D(2,3);
+    D.fill(std::vector<float> {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f});
+    MatrixView DView = D.view();
 
     // Test multiply function
     multiply(AView, BView, CView);
+    // Test addition function
+    add(AView, AView, DView);
+
     return 0;
 }

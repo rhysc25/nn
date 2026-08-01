@@ -31,3 +31,6 @@ class MatrixOwner {
         MatrixView view();
         void fill(std::vector<float> vin);
 };
+
+void add(MatrixView& a, MatrixView& b, MatrixView& out);
+void multiply(MatrixView& a, MatrixView& b, MatrixView& out);
