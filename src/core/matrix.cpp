@@ -7,6 +7,19 @@ float& MatrixView::operator()(size_t r, size_t c) {
     return data[r * stride + c];
 }
 
+void MatrixView::resize(size_t r, size_t c) {
+    
+    std::vector<float> a = {};
+    for (int i = 0; i < (r * c); i++) {
+        a.push_back(0.0f);
+    }
+
+    data = (float*) a.data();
+    rows = r;
+    cols = c;
+    stride = c;
+}
+
 size_t MatrixView::get_columns() {return cols;}
 void MatrixView::set_columns(size_t c) {cols = c;}
 size_t MatrixView::get_rows() {return rows;}
@@ -38,8 +51,6 @@ void MatrixOwner::fill(std::vector<float> vin) {
 }
 
 void multiply(MatrixView& a, MatrixView& b, MatrixView& out) {
-    a.list_contents();
-    b.list_contents();
 
     if (a.get_columns() != b.get_rows()) {
         std::cout << "Error: Rows of A must equal columns of B."; 
@@ -56,12 +67,11 @@ void multiply(MatrixView& a, MatrixView& b, MatrixView& out) {
         }
     }
 
-    out.list_contents();
 }
 
 void add(MatrixView& a, MatrixView& b, MatrixView& out) {
-    a.list_contents();
-    b.list_contents();
+    
+    out.resize(a.get_rows(), a.get_columns());
 
     for (int i = 0; i < out.get_rows(); i++) {
         for (int j = 0; j < out.get_columns(); j++) {
@@ -90,7 +100,7 @@ int main() {
     // Test multiply function
     multiply(AView, BView, CView);
     // Test addition function
-    add(AView, AView, DView);
+    add(AView, AView, CView);
 
     return 0;
 }
