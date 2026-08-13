@@ -1,3 +1,5 @@
+#include <chrono>
+#include <iostream>
 #include "matrix.h"
 
 MatrixView::MatrixView(float* d, size_t r, size_t c, size_t s)
@@ -86,7 +88,6 @@ MatrixOwner add(MatrixView& a, MatrixView& b) {
     return C;
 }
     
-
 int main() {
     // Set up test
     MatrixOwner A(2,3);
@@ -95,32 +96,20 @@ int main() {
     MatrixOwner B(3,2);
     B.fill(std::vector<float> {3.0f, 4.0f, 2.0f, 1.0f, 8.0f, 5.0f});
     MatrixView BView = B.view();
-    MatrixOwner C(2,2);
-    C.fill(std::vector<float> {0.0f, 0.0f, 0.0f, 0.0f});
-    MatrixView CView = C.view();
-    MatrixOwner D(2,3);
-    D.fill(std::vector<float> {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f});
-    MatrixView DView = D.view();
+
+    // Time test
+    auto start = std::chrono::high_resolution_clock::now(); 
 
     // Test multiply function
-    MatrixOwner H = multiply(AView, BView);
+    MatrixOwner C = multiply(AView, BView);
 
-    MatrixOwner E(1,1);
-    E.fill(std::vector<float> {3.0f});
-    MatrixView EView = E.view();
-    MatrixOwner F(3,1);
-    F.fill(std::vector<float> {3.0f, 4.0f, 2.0f});
-    MatrixView FView = F.view();
-    
-    MatrixOwner G(3,3);
-    G.fill(std::vector<float> {3.0f, 4.0f, 2.0f, 1.0f, 5.0f, 6.0f, 2.0f, 8.0f, 6.0f});
-    MatrixView GView = G.view();
+    auto end = std::chrono::high_resolution_clock::now(); 
 
-    H.view().list_contents();
+    C.view().list_contents();
 
-    MatrixOwner I = add(AView, AView);
+    auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
 
-    I.view().list_contents();
+    std::cout << "Time for multiplication: " << duration.count() << " nanoseconds.\n";
 
     return 0;
 }
