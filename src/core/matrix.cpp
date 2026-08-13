@@ -37,13 +37,7 @@ void MatrixOwner::fill(std::vector<float> vin) {
     std::copy(vin.begin(), vin.end(), v.begin());
 }
 
-void multiply(MatrixView& a, MatrixView& b, MatrixView& out) {
-
-    if (a.get_columns() != b.get_rows()) {
-        std::cout << "Error: Rows of A must equal columns of B."; 
-        return;
-    }
-
+void multiply_imp(MatrixView& a, MatrixView& b, MatrixView& out) {
     for (int i = 0; i < out.get_rows(); i++) {
         for (int j = 0; j < out.get_columns(); j++) {
             float temp = 0;
@@ -56,7 +50,7 @@ void multiply(MatrixView& a, MatrixView& b, MatrixView& out) {
 
 }
 
-void add(MatrixView& a, MatrixView& b, MatrixView& out) {
+void add_imp(MatrixView& a, MatrixView& b, MatrixView& out) { 	
     for (int i = 0; i < out.get_rows(); i++) {
         for (int j = 0; j < out.get_columns(); j++) {
             out(i, j) = a(i, j) + b(i, j);
@@ -64,8 +58,22 @@ void add(MatrixView& a, MatrixView& b, MatrixView& out) {
     }
 }
 
+MatrixOwner multiply(MatrixView& a, MatrixView& b) {
+    if (a.get_columns() != b.get_rows()) {
+        std::cout << "Error: Rows of A must equal columns of B."; 
+        MatrixOwner C(0, 0);
+        return C;
+    }
+    MatrixOwner C(a.get_rows(), b.get_columns());
+    MatrixView c = C.view();
+
+    multiply_imp(a, b, c);
+
+    return C;
+}
+    
+
 int main() {
-  
     // Set up test
     MatrixOwner A(2,3);
     A.fill(std::vector<float> {3.0f, 4.0f, 2.0f, 1.0f, 8.0f, 5.0f});
@@ -81,7 +89,7 @@ int main() {
     MatrixView DView = D.view();
 
     // Test multiply function
-    multiply(AView, BView, CView);
+    MatrixOwner H = multiply(AView, BView);
 
     MatrixOwner E(1,1);
     E.fill(std::vector<float> {3.0f});
@@ -94,7 +102,7 @@ int main() {
     G.fill(std::vector<float> {3.0f, 4.0f, 2.0f, 1.0f, 5.0f, 6.0f, 2.0f, 8.0f, 6.0f});
     MatrixView GView = G.view();
 
-    CView.list_contents();
+    H.view().list_contents();
 
     return 0;
 }
