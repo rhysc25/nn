@@ -7,19 +7,6 @@ float& MatrixView::operator()(size_t r, size_t c) {
     return data[r * stride + c];
 }
 
-void MatrixView::resize(size_t r, size_t c) {
-    
-    std::vector<float> a = {};
-    for (int i = 0; i < (r * c); i++) {
-        a.push_back(0.0f);
-    }
-
-    data = (float*) a.data();
-    rows = r;
-    cols = c;
-    stride = c;
-}
-
 size_t MatrixView::get_columns() {return cols;}
 void MatrixView::set_columns(size_t c) {cols = c;}
 size_t MatrixView::get_rows() {return rows;}
@@ -70,19 +57,15 @@ void multiply(MatrixView& a, MatrixView& b, MatrixView& out) {
 }
 
 void add(MatrixView& a, MatrixView& b, MatrixView& out) {
-    
-    out.resize(a.get_rows(), a.get_columns());
-
     for (int i = 0; i < out.get_rows(); i++) {
         for (int j = 0; j < out.get_columns(); j++) {
             out(i, j) = a(i, j) + b(i, j);
         }
     }
-
-    out.list_contents();
 }
 
 int main() {
+  
     // Set up test
     MatrixOwner A(2,3);
     A.fill(std::vector<float> {3.0f, 4.0f, 2.0f, 1.0f, 8.0f, 5.0f});
@@ -99,8 +82,19 @@ int main() {
 
     // Test multiply function
     multiply(AView, BView, CView);
-    // Test addition function
-    add(AView, AView, CView);
+
+    MatrixOwner E(1,1);
+    E.fill(std::vector<float> {3.0f});
+    MatrixView EView = E.view();
+    MatrixOwner F(3,1);
+    F.fill(std::vector<float> {3.0f, 4.0f, 2.0f});
+    MatrixView FView = F.view();
+    
+    MatrixOwner G(3,3);
+    G.fill(std::vector<float> {3.0f, 4.0f, 2.0f, 1.0f, 5.0f, 6.0f, 2.0f, 8.0f, 6.0f});
+    MatrixView GView = G.view();
+
+    CView.list_contents();
 
     return 0;
 }

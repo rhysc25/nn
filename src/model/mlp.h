@@ -1,10 +1,10 @@
 #pragma once
 
-#include <iostream>
+#include <vector>
 
 class MLP {
+    private:
+        std::vector<float*> layers;
     public:
-        void test() {
-            std::cout << "MLP class sorted";
-        }
+        MLP(std::vector<float*> l);
 };

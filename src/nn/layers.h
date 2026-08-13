@@ -1,7 +1,6 @@
 #pragma once
 
-#include <cmath>
-
-class layer () {
-    
-}
+class Layers {
+    public:
+        Layers(std::vector<float*>& layers);
+};
