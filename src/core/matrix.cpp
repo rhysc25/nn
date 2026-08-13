@@ -71,6 +71,20 @@ MatrixOwner multiply(MatrixView& a, MatrixView& b) {
 
     return C;
 }
+
+MatrixOwner add(MatrixView& a, MatrixView& b) {
+    if (a.get_rows() != b.get_rows() || a.get_columns() != b.get_columns()) {
+        std::cout << "Error: Matrices A and B must be the same shape for addition."; 
+        MatrixOwner C(0, 0);
+        return C;
+    }
+    MatrixOwner C(a.get_rows(), b.get_columns());
+    MatrixView c = C.view();
+
+    add_imp(a, b, c);
+
+    return C;
+}
     
 
 int main() {
@@ -103,6 +117,10 @@ int main() {
     MatrixView GView = G.view();
 
     H.view().list_contents();
+
+    MatrixOwner I = add(AView, AView);
+
+    I.view().list_contents();
 
     return 0;
 }

@@ -32,7 +32,7 @@ class MatrixOwner {
         void fill(std::vector<float> vin);
 };
 
-void add_imp(MatrixView& a, MatrixView& b, MatrixView& out);
 void multiply_imp(MatrixView& a, MatrixView& b, MatrixView& out);
-void add(MatrixView& a, MatrixView& b);
+void add_imp(MatrixView& a, MatrixView& b, MatrixView& out);
 MatrixOwner multiply(MatrixView& a, MatrixView& b);
+MatrixOwner add(MatrixView& a, MatrixView& b);
