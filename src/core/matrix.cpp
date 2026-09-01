@@ -90,29 +90,33 @@ MatrixOwner add(MatrixView& a, MatrixView& b) {
 }
 
 void worker_multiply_imp(MatrixView& a, MatrixView& b, MatrixView& out, size_t start, size_t end) {
+    size_t a_cols = a.get_columns();
+    size_t out_cols = out.get_columns();
+
     for (int i = start; i < end; i++) {
-        for (int j = 0; j < out.get_columns(); j++) {
-            float temp = 0;
-            for (int k = 0; k < a.get_columns(); k++) {
-                out(i, j) += (a(i, k) * b(k, j));
+        for (int k = 0; k < a_cols; k++) {
+            float aik = a(i, k);
+            for (int j = 0; j < out_cols; j++) {
+                out(i, j) += aik * b(k, j);
             }
         }
     }
 }
 
 void join_multiply_imp(MatrixView& a, MatrixView& b, MatrixView& out) {
-    size_t num_threads = std::thread::hardware_concurrency();
+    size_t num_threads = std::min((int)std::thread::hardware_concurrency(), 12);
+    size_t out_rows = out.get_rows();
 
     std::vector<std::thread> threads;
-    size_t chunk_size = out.get_rows() / num_threads;
+    size_t chunk_size = out_rows / num_threads;
 
     if (chunk_size) {
         for (size_t i = 0; i < num_threads; i++) {
             size_t start = chunk_size * i;
-            size_t end = i == (num_threads - 1) ? out.get_rows() : chunk_size * (i + 1);
+            size_t end = i == (num_threads - 1) ? out_rows : chunk_size * (i + 1);
             threads.emplace_back(worker_multiply_imp, std::ref(a), std::ref(b), std::ref(out), start, end);
         }
-    }
+    } 
     else {
         for (size_t i = 0; i < out.get_rows(); i++) {
             size_t start = i;
@@ -145,8 +149,8 @@ void print_num_threads() {
     std::cout << std::thread::hardware_concurrency();
     std::cout << "\n";
 }
-    
-int main() {
+
+size_t multiplication_test() {
     // Set up test
     std::mt19937 gen(std::random_device{}());
     std::uniform_real_distribution<float> dist(0.0f, 1.0f);
@@ -156,13 +160,11 @@ int main() {
     for (float& x : values)
         x = dist(gen);
 
-    MatrixOwner A(10000,10);
-    //A.fill(std::vector<float> {3.0f, 4.0f, 2.0f, 1.0f, 8.0f, 5.0f});
+    MatrixOwner A(1000,100);
     A.fill(values);
-
     MatrixView AView = A.view();
-    MatrixOwner B(10,10000);
-    //B.fill(std::vector<float> {3.0f, 4.0f, 2.0f, 1.0f, 8.0f, 5.0f});
+
+    MatrixOwner B(100,1000);
     B.fill(values);
     MatrixView BView = B.view();
 
@@ -170,8 +172,8 @@ int main() {
     auto start = std::chrono::high_resolution_clock::now(); 
 
     // Test multiply function
-    //MatrixOwner C = join_multiply(AView, BView);
-    MatrixOwner C = multiply(AView, BView);
+    MatrixOwner C = join_multiply(AView, BView);
+    //MatrixOwner C = multiply(AView, BView);
 
     auto end = std::chrono::high_resolution_clock::now(); 
 
@@ -181,7 +183,22 @@ int main() {
 
     std::cout << "Time for multiplication: " << duration.count() << " microseconds.\n";
 
-    print_num_threads();
+    return (size_t) duration.count();
+}
+
+void multi_test(size_t iter) {
+    size_t result = 0;
+    for (size_t i = 0; i < iter; i++) {
+        result += multiplication_test();
+    }
+
+    std::cout << "The average over " << iter << " tests is: " << (result / iter) << " microseconds.\n";
+}
+
+int main() {
+    
+    size_t iter = 10;
+    multi_test(iter);
 
     return 0;
 }

@@ -45,3 +45,5 @@ void join_add_imp(MatrixView& a, MatrixView& b, MatrixView& out);
 MatrixOwner join_add(MatrixView& a, MatrixView& b);
 
 void print_num_threads();
+size_t multiplication_test();
+void multi_test(size_t iter);
