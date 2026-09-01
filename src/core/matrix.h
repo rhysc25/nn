@@ -36,3 +36,12 @@ void multiply_imp(MatrixView& a, MatrixView& b, MatrixView& out);
 void add_imp(MatrixView& a, MatrixView& b, MatrixView& out);
 MatrixOwner multiply(MatrixView& a, MatrixView& b);
 MatrixOwner add(MatrixView& a, MatrixView& b);
+
+void worker_multiply_imp(MatrixView& a, MatrixView& b, MatrixView& out, size_t start, size_t end);
+void join_multiply_imp(MatrixView& a, MatrixView& b, MatrixView& out);
+MatrixOwner join_multiply(MatrixView& a, MatrixView& b);
+void worker_add_imp(MatrixView& a, MatrixView& b, MatrixView& out, size_t start, size_t end);
+void join_add_imp(MatrixView& a, MatrixView& b, MatrixView& out);
+MatrixOwner join_add(MatrixView& a, MatrixView& b);
+
+void print_num_threads();
