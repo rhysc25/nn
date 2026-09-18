@@ -1,6 +1,8 @@
-add_executable(mlp)
+add_executable(mlp
+    mlp.cpp
+)
 
-target_sources(mlp
+target_link_libraries(mlp
     PRIVATE
-        mlp.cpp
+        matrix
 )
