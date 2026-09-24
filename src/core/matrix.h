@@ -29,7 +29,7 @@ class MatrixOwner {
     public:
         MatrixOwner(size_t r, size_t c);
         MatrixView view();
-        void fill(std::vector<float> vin);
+        void fill(const std::vector<float>& vin);
 };
 
 void multiply_imp(MatrixView& a, MatrixView& b, MatrixView& out);

@@ -7,7 +7,7 @@ int main() {
 
     layer alpha = layer(3, 3);
 
-    alpha.loadWeights(std::vector<float> {3.0f, 4.0f, 2.0f, 1.0f, 8.0f, 5.0f, 3.0f, 4.0f, 2.0f});
+    alpha.loadWeights({3.0f, 4.0f, 2.0f, 1.0f, 8.0f, 5.0f, 3.0f, 4.0f, 2.0f});
 
     //MatrixView CView = C.view();
 

@@ -37,7 +37,7 @@ MatrixView MatrixOwner::view(){
     return MatrixView(v.data(), rows, cols, cols);
 }
 
-void MatrixOwner::fill(std::vector<float> vin) {
+void MatrixOwner::fill(const std::vector<float>& vin) {
     if (vin.size() != v.size()) { return; }
     std::copy(vin.begin(), vin.end(), v.begin());
 }
