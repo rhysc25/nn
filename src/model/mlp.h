@@ -14,4 +14,6 @@ class layer {
         layer(size_t r, size_t c);
         void loadWeights(const std::vector<float>& vin) {weights.fill(vin);};
         void loadBias(const std::vector<float>& vin) {bias.fill(vin);};
+        MatrixView weightsView() {return weights.view();};
+        MatrixView biasView() {return bias.view();};
 };

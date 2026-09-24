@@ -9,9 +9,9 @@ int main() {
 
     alpha.loadWeights({3.0f, 4.0f, 2.0f, 1.0f, 8.0f, 5.0f, 3.0f, 4.0f, 2.0f});
 
-    //MatrixView CView = C.view();
+    MatrixView alphaView = alpha.weightsView();
 
-    std::cout << "Hi" << "\n";
+    alphaView.list_contents();
 
     size_t iter = 10;
     multi_test(iter);
