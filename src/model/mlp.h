@@ -11,6 +11,8 @@ class Activation {
     public:
         Activation(std::function<float(float)> func, std::function<float(float)> der) 
             : function(std::move(func)), derivative(std::move(der)) {};
+        float activate(float x) {return function(x);};
+        float differentiate(float x) {return derivative(x);};
 };
 
 class layer {
