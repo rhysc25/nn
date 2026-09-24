@@ -194,13 +194,3 @@ void multi_test(size_t iter) {
 
     std::cout << "The average over " << iter << " tests is: " << (result / iter) << " microseconds.\n";
 }
-
-/*
-int main() {
-    
-    size_t iter = 10;
-    multi_test(iter);
-
-    return 0;
-}
-*/

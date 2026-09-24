@@ -1,10 +1,16 @@
 #pragma once
 
 #include <vector>
+#include "matrix.h"
 
-class MLP {
+class layer {
     private:
-        std::vector<float*> layers;
+        MatrixOwner weights;
+        MatrixOwner bias;
+        //MatrixOwner activation;
+
     public:
-        MLP(std::vector<float*> l);
+        //MatrixOwner forward(MatrixView x, MatrixOwner weights, MatrixOwner bias);
+        layer(size_t r, size_t c);
+        void loadWeights(std::vector<float> vin) {weights.fill(vin);};
 };
