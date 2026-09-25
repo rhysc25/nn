@@ -1,8 +1,13 @@
-add_executable(mlp
-    mlp.cpp
+add_library(model
+    layers.cpp
 )
 
-target_link_libraries(mlp
-    PRIVATE
-        matrix
+target_link_libraries(model
+    PUBLIC
+        core
+)
+
+target_include_directories(model
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}
 )

@@ -10,5 +10,5 @@ else
     rm -rf build
     cmake -S . -B build -G "Unix Makefiles"
     cmake --build build
-    ./build/src/model/mlp
+    ./build/src/nn/nn
 fi

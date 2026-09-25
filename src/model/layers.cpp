@@ -1,4 +1,4 @@
-#include "mlp.h"
+#include "layers.h"
 #include <iostream>
 
 Activation ReLU (

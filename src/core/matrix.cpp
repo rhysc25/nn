@@ -173,11 +173,8 @@ size_t multiplication_test() {
 
     // Test multiply function
     MatrixOwner C = join_multiply(AView, BView);
-    //MatrixOwner C = multiply(AView, BView);
 
     auto end = std::chrono::high_resolution_clock::now(); 
-
-    //C.view().list_contents();
 
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
 
